@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Form Validation</title>
+  <style>
+    .error {
+      color: red;
+    }
+
+    .mandatory::after {
+      content: "*";
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h2>JavaScript Form Validation</h2>
+  <form id="myForm" onsubmit="return validateForm()">
+    <label for="name">Name<span class="mandatory"></span>:</label><input type="text" id="name" name="name" maxlength="20" required><br>
+    <span id="nameError" class="error"></span><br>
+    
+    <label for="address">Address:</label><textarea id="address" name="address"></textarea><br>
+    
+    <label for="zip">Zip Code<span class="mandatory"></span>:</label><input type="text" id="zip" name="zip" required><br>
+    <span id="zipError" class="error"></span><br>
+    
+    <label for="country">Country<span class="mandatory"></span>:</label><select id="country" name="country" required>
+      <option value="" disabled selected>Select...</option>
+      <option value="Tanzania">Tanzania</option>
+      <option value="Kenya">Kenya</option>
+      <option value="Uganda">Uganda</option>
+    </select><br>
+    <span id="countryError" class="error"></span><br>
+    
+    <label for="gender">Gender<span class="mandatory"></span>:</label><input type="radio" id="male" name="gender" value="male" required><label for="male">Male</label><input type="radio" id="female" name="gender" value="female" required><label for="female">Female</label><br>
+    <span id="genderError" class="error"></span><br>
+    
+    <label for="preferences">Preferences<span class="mandatory"></span>:</label><input type="checkbox" id="red" name="preferences" value="red"><label for="red">Red</label><input type="checkbox" id="green" name="preferences" value="green"><label for="green">Green</label><input type="checkbox" id="blue" name="preferences" value="blue"><label for="blue">Blue</label><br>
+    <span id="preferencesError" class="error"></span><br>
+    
+    <label for="phone">Phone<span class="mandatory"></span>:</label><input type="text" id="phone" name="phone" required><br>
+    <span id="phoneError" class="error"></span><br>
+    
+    <label for="email">Email<span class="mandatory"></span>:</label><input type="email" id="email" name="email" required><br>
+    <span id="emailError" class="error"></span><br>
+    
+    <label for="password">Password (6-8 characters)<span class="mandatory"></span>:</label><input type="password" id="password" name="password" minlength="6" maxlength="8" required><br>
+    <span id="passwordError" class="error"></span><br>
+    
+    <label for="verifyPassword">Verify Password<span class="mandatory"></span>:</label><input type="password" id="verifyPassword" name="verifyPassword" required><br>
+    <span id="verifyPasswordError" class="error"></span><br>
+    
+    <input type="submit" value="SEND">
+    <input type="reset" value="CLEAR">
+  </form>
+
+  <script>
+    function validateForm() {
+            clearErrors();
+
+      
+      var name = document.getElementById("name").value;
+      var zip = document.getElementById("zip").value;
+      var country = document.getElementById("country").value;
+      var gender = document.querySelector('input[name="gender"]:checked');
+      var preferences = document.querySelectorAll('input[name="preferences"]:checked');
+      var phone = document.getElementById("phone").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      var verifyPassword = document.getElementById("verifyPassword").value;
+      var isValid = true;
+
+     
+      if (name.length > 20) {
+        document.getElementById("nameError").innerHTML = "Name must be less than or equal to 20 characters";
+        isValid = false;
+      }
+      var zipRegex = /^\d{5}$/;
+      if (!zipRegex.test(zip)) {
+        document.getElementById("zipError").innerHTML = "Zip Code must be 5 digits";
+        isValid = false;
+      }
+      if (country === "") {
+        document.getElementById("countryError").innerHTML = "Please select a country";
+        isValid = false;
+      }
+      if (gender === null) {
+        document.getElementById("genderError").innerHTML = "Please select a gender";
+        isValid = false;
+      }
+      if (preferences.length === 0) {
+        document.getElementById("preferencesError").innerHTML = "Please select at least one preference";
+        isValid = false;
+      }
+      var phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone)) {
+        document.getElementById("phoneError").innerHTML = "Phone number must be 10 digits";
+        isValid = false;
+      }
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById("emailError").innerHTML = "Invalid email address";
+        isValid = false;
+      }
+      if (password.length < 6 || password.length > 8) {
+        document.getElementById("passwordError").innerHTML = "Password must be 6-8 characters";
+        isValid = false;
+      }
+      if (password !== verifyPassword) {
+        document.getElementById("verifyPasswordError").innerHTML = "Passwords do not match";
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    function clearErrors() {
+      var errorElements = document.getElementsByClassName("error");
+      for (var i = 0; i < errorElements.length; i++) {
+        errorElements[i].innerHTML = "";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Registration Form</title>
+  <script>
+    function validateForm() {
+     
+      var name = document.getElementById("name").value;
+      var regNo = document.getElementById("regNo").value;
+      var dob = document.getElementById("dob").value;
+      var program = document.getElementById("program").value;
+      var email = document.getElementById("email").value;
+      var tempAddress = document.getElementById("tempAddress").value;
+      var phone = document.getElementById("phone").value;
+      var permanentAddress = document.getElementById("permanentAddress").value;
+
+      if (phone.length !== 10 || isNaN(phone)) {
+        alert("Mobile number should be exactly 10 digits.");
+        return false;
+      }
+
+      
+      if (!/^[a-zA-Z0-9]+$/.test(regNo)) {
+        alert("Register number should have alphabets and numbers only.");
+        return false;
+      }
+      if (!/^[a-zA-Z]+$/.test(name) || name.length > 30) {
+        alert("Name should not exceed 30 characters and can only contain alphabets.");
+        return false;
+      }
+
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        alert("Invalid email address.");
+        return false;
+      }
+
+      if (document.getElementById("permanentCheckbox").checked) {
+        document.getElementById("permanentAddress").value = tempAddress;
+      }
+
+      return true;
+    }
+  </script>
+</head>
+<body>
+  <h1>Student Registration Form</h1>
+  <form onsubmit="return validateForm()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required><br>
+
+    <label for="regNo">Register Number:</label>
+    <input type="text" id="regNo" required><br>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" required><br>
+
+    <label for="program">Program:</label>
+    <input type="text" id="program" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required><br>
+
+    <label for="tempAddress">Temporary Address:</label>
+    <textarea id="tempAddress" required></textarea><br>
+
+    <label for="permanentCheckbox">Permanent Address is same as Temporary Address:</label>
+    <input type="checkbox" id="permanentCheckbox" onchange="document.getElementById('permanentAddress').disabled = this.checked"><br>
+
+    <label for="permanentAddress">Permanent Address:</label>
+    <textarea id="permanentAddress" disabled></textarea><br>
+
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone" required><br>
+
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
